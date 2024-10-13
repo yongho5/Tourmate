@@ -1,66 +1,233 @@
-<!-- search.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Type</title>
+    <title>서울 관광 안내</title>
     <style>
-        /* 전체 페이지 스타일 */
         body {
-            font-family: 'Arial', sans-serif; /* 글꼴 설정 */
-            margin: 0; /* 기본 여백 제거 */
-            background-image: url('https://st2.depositphotos.com/6513236/9320/i/450/depositphotos_93207836-stock-photo-gwanghwamun-gate-of-gyeongbokgung-palace.jpg'); /* 배경 이미지 설정 */
-            background-size: cover; /* 배경 이미지 크기 조절 */
-            background-position: center; /* 배경 이미지 위치 조정 */
-            display: flex; /* Flexbox 사용 */
-            flex-direction: column; /* 세로 방향 정렬 */
-            justify-content: center; /* 수직 중앙 정렬 */
-            align-items: center; /* 수평 중앙 정렬 */
-            height: 100vh; /* 화면 높이 100% */
-            color: white; /* 텍스트 색상 */
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
-
-        /* 제목 스타일 */
+        header {
+            background: #0073e6;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
         h1 {
-            font-size: 2.5em; /* 제목 크기 조정 */
-            margin-bottom: 40px; /* 제목과 버튼 간의 여백 */
+            margin: 0;
         }
-
-        /* 버튼 컨테이너 스타일 */
-        .button-container {
-            display: flex; /* Flexbox 사용 */
-            flex-direction: column; /* 버튼 세로 방향 정렬 */
-            align-items: center; /* 버튼 중앙 정렬 */
+        nav {
+            margin: 10px 0;
         }
-
-        /* 버튼 스타일 */
-        button {
-            padding: 12px 20px; /* 버튼 내부 여백 */
-            font-size: 1.2em; /* 버튼 글씨 크기 */
-            color: white; /* 버튼 글씨 색상 */
-            background-color: rgba(0, 123, 255, 0.8); /* 버튼 배경 색상 (투명도 추가) */
-            border: none; /* 테두리 없음 */
-            border-radius: 5px; /* 모서리 둥글게 */
-            cursor: pointer; /* 커서 모양 변경 */
-            transition: background-color 0.3s, transform 0.3s; /* 배경색 변화 및 크기 변화 애니메이션 */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 버튼 그림자 */
-            margin: 10px; /* 버튼 간의 여백 */
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
         }
-
-        /* 버튼 호버 스타일 */
-        button:hover {
-            background-color: rgba(0, 105, 255, 0.8); /* 호버 시 색상 변경 */
-            transform: translateY(-2px); /* 버튼 위로 이동 */
+        nav a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 20px;
+            margin: 10px auto;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #0073e6;
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .attraction {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+        .attraction h3 {
+            color: #0073e6;
+            margin-top: 0;
+            cursor: pointer; /* 클릭 가능하다는 표시 */
+        }
+        .attraction img {
+            width: 30%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .search {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search input {
+            padding: 10px;
+            width: 75%;
+            max-width: 350px;
+            border: 1px solid #0073e6;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+        .search input:focus {
+            border-color: #005bb5;
+            outline: none;
+        }
+        .search button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #0073e6;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .search button:hover {
+            background-color: #005bb5;
+        }
+        .search button:active {
+            background-color: #004a99;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Seoul</h1>
-    <h1>Select a search method</h1>
-    <div class="button-container">
-        <button onclick="location.href='event.html'">Event information</button>
-        <button onclick="location.href='local.html'">Famous Attraction</button>
-    </div>
+    <header>
+        <h1>서울 관광 안내</h1>
+        <nav>
+            <a href="#attractions">관광지</a>
+            <a href="#food">맛집</a>
+            <a href="#culture">문화</a>
+        </nav>
+    </header>
+
+    <section id="attractions">
+        <h2>주요 관광지</h2>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="관광지 검색">
+            <button id="searchBtn">검색</button>
+        </div>
+        <div id="attractionList">
+            <div class="attraction" data-name="남산서울타워">
+                <h3 onclick="openGoogleMaps('남산서울타워')">남산서울타워</h3>
+                <img src="https://50plus.or.kr/upload/im/2020/07/b8a92503-f34a-4aff-99dd-546fa06c47cc.jpg" alt="남산서울타워">
+                <p>남산서울타워는 서울의 대표적인 랜드마크로, 전망대에서 서울의 전경을 감상할 수 있습니다.</p>
+            </div>
+            <div class="attraction" data-name="명동">
+                <h3 onclick="openGoogleMaps('명동')">명동</h3>
+                <img src="https://lh3.googleusercontent.com/proxy/kk1Dx0y51tcKFj61Lwgn_PEB7muF_YoHzq49FaleZvb2SfLIi4mODkzIBigs7BPug2YVtNUcRu8" alt="명동">
+                <p>명동은 쇼핑과 맛집, 거리 공연 등으로 유명한 활기찬 지역입니다.</p>
+            </div>
+            <div class="attraction" data-name="경복궁">
+                <h3 onclick="openGoogleMaps('경복궁')">경복궁</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQGI212V96YIxA1i56xb9JWuSVfz7nISCxIg&s" alt="경복궁">
+                <p>경복궁은 조선 왕조의 주요 궁궐로, 아름다운 건축물과 풍부한 역사적 배경을 자랑합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="food">
+        <h2>맛집 추천</h2>
+        <div class="search">
+            <input type="text" id="foodSearchInput" placeholder="맛집 검색">
+            <button id="foodSearchBtn">검색</button>
+        </div>
+        <div id="foodList">
+            <div class="attraction" data-name="광장시장" data-lat="37.5702" data-lng="126.9990">
+                <h3 onclick="showOnMap('광장시장', 37.5702, 126.9990)">광장시장</h3>
+                <img src="https://file.mk.co.kr/meet/neds/2023/12/image_readmed_2023_992760_17038273825771660.jpg" alt="광장시장">
+                <p>광장시장은 다양한 전통 음식을 제공하는 유명한 시장입니다.</p>
+            </div>
+            <div class="attraction" data-name="이태원" data-lat="37.5348" data-lng="126.9992">
+                <h3 onclick="showOnMap('이태원', 37.5348, 126.9992)">이태원</h3>
+                <img src="https://tong.visitkorea.or.kr/upload/traveli/fileup/1386544149477.jpg" alt="이태원">
+                <p>이태원은 다양한 국제 음식을 맛볼 수 있는 다문화 지역입니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="culture">
+        <h2>문화 체험</h2>
+        <div class="search">
+            <input type="text" id="cultureSearchInput" placeholder="문화체험 검색">
+            <button id="event">검색</button>
+        </div>
+        <div id="cultureList">
+            <div class="attraction" data-name="국립중앙박물관" data-lat="37.5267" data-lng="126.9808">
+                <h3 onclick="showOnMap('국립중앙박물관', 37.5267, 126.9808)">국립중앙박물관</h3>
+                <img src="https://cdn.sbiztoday.kr/news/photo/201902/4979_6026_214.jpg" alt="국립중앙박물관">
+                <p>국립중앙박물관은 한국의 역사와 문화를 전시하는 대표적인 박물관입니다.</p>
+            </div>
+            <div class="attraction" data-name="북촌한옥마을" data-lat="37.5824" data-lng="126.9834">
+                <h3 onclick="showOnMap('북촌한옥마을', 37.5824, 126.9834)">북촌한옥마을</h3>
+                <img src="https://i.namu.wiki/i/DEvKxYg-TEz6O53jeZyS9kndJSgSQnFysm3T-R70yXIyWi9-HknJZXoK1ghHFMwB365TyyMj7MlIebAKMrLSFA.webp" alt="북촌한옥마을">
+                <p>북촌한옥마을은 전통 한옥이 잘 보존되어 있는 지역으로, 한국의 전통 문화를 체험할 수 있습니다.</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <footer>
+        <p>&copy; 2024 서울 관광 안내</p>
+    </footer>
+
+    <script>
+        const clientId = 'Cb3iNaqgfpkx6ZJYiO4R'; // 여기에 본인의 클라이언트 ID를 입력하세요.
+        const clientSecret = '_VOJu6ZYS3'; // 여기에 본인의 클라이언트 시크릿을 입력하세요.
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const attractionList = document.getElementById('attractionList');
+
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value;
+
+            // 네이버 API 요청
+            fetch(`https://openapi.naver.com/v1/search/local.json?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'X-Naver-Client-Id': clientId,
+                    'X-Naver-Client-Secret': clientSecret,
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 기존 추천 관광지 삭제
+                    attractionList.innerHTML = '';
+
+                    if (data.items.length === 0) {
+                        attractionList.innerHTML = '<p>검색 결과가 없습니다.</p>';
+                    } else {
+                        data.items.forEach(place => {
+                            const attractionDiv = document.createElement('div');
+                            attractionDiv.classList.add('attraction');
+                            attractionDiv.innerHTML = `
+                                <h3 onclick="openGoogleMaps('${place.title}')">${place.title}</h3>
+                                <img src="${place.mapy}" alt="${place.title}">
+                                <p>${place.address}</p>
+                            `;
+                            attractionList.appendChild(attractionDiv);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        function openGoogleMaps(place) {
+            const encodedPlace = encodeURIComponent(place);
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encodedPlace}`, '_blank');
+        }
+
+        function showOnMap(name, lat, lng) {
+            window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
+        }
+    </script>
 </body>
 </html>
