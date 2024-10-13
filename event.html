@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seoul Cultural Events</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            font-family: 'Arial', sans-serif; /* 글꼴 설정 */
+            background-image: url('https://www.sto.or.kr/humanframe/theme/sto/assets/images/fest_22_1-1.jpg'); /* 배경 이미지 추가 */
+            background-size: cover; /* 배경 이미지 크기 조정 */
+            background-position: center; /* 배경 이미지 위치 조정 */
+            margin: 0; /* 기본 여백 제거 */
+            padding: 20px; /* 내부 여백 추가 */
+            font-size: 16px; /* 기본 폰트 크기 설정 */
+        }
+
+        /* 제목 스타일 */
+        h1 {
+            text-align: left; /* 제목 왼쪽 정렬 */
+            font-size: 2.5em; /* 제목 크기 조정 */
+            color: #333; /* 제목 색상 */
+            margin-bottom: 20px; /* 아래 여백 추가 */
+            background-color: rgba(255, 255, 255, 0.9); /* 더 불투명한 흰색 배경 */
+            border-radius: 8px; /* 모서리 둥글게 */
+            padding: 10px; /* 내부 여백 추가 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+        }
+
+        /* 입력 필드 스타일 */
+        input[type="text"],
+        input[type="date"] {
+            width: 250px; /* 입력창 너비 조정 */
+            padding: 10px; /* 내부 여백 */
+            border: 1px solid #ccc; /* 테두리 */
+            border-radius: 5px; /* 모서리 둥글게 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            transition: border-color 0.3s; /* 테두리 색상 변화 애니메이션 */
+            margin-right: 10px; /* 날짜 입력 필드와 텍스트 입력 필드 간격 */
+        }
+
+        /* 입력 필드 포커스 스타일 */
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            border-color: #007bff; /* 포커스 시 테두리 색상 변경 */
+            outline: none; /* 포커스 아웃라인 제거 */
+        }
+
+        /* 버튼 스타일 */
+        button {
+            padding: 10px 15px; /* 버튼 내부 여백 */
+            font-size: 1.2em; /* 버튼 글씨 크기 */
+            color: white; /* 버튼 글씨 색상 */
+            background-color: #0056b3; /* 버튼 기본 색상 변경 */
+            border: none; /* 테두리 없음 */
+            border-radius: 5px; /* 모서리 둥글게 */
+            cursor: pointer; /* 커서 모양 변경 */
+            transition: background-color 0.3s; /* 배경색 변화 애니메이션 */
+        }
+
+        /* 버튼 호버 스타일 */
+        button:hover {
+            background-color: #004085; /* 호버 시 더 어두운 색상 */
+        }
+
+        /* 이벤트 리스트 스타일 */
+        #eventList {
+            margin-top: 20px; /* 이벤트 리스트 위 여백 */
+            display: flex; /* Flexbox 사용 */
+            flex-direction: column; /* 세로 방향 정렬 */
+        }
+
+        /* 개별 이벤트 스타일 */
+        .event {
+            display: flex; /* Flexbox 사용하여 이미지와 텍스트 정렬 */
+            border: 1px solid #ccc; /* 테두리 */
+            padding: 15px; /* 내부 여백 */
+            margin: 10px 0; /* 상하 여백 */
+            border-radius: 8px; /* 모서리 둥글게 */
+            background-color: #fff; /* 흰색 배경 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            transition: box-shadow 0.3s, transform 0.3s; /* 그림자 변화 애니메이션 */
+        }
+
+        /* 이벤트 호버 스타일 */
+        .event:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 강하게 */
+            transform: scale(1.02); /* 호버 시 확대 효과 */
+        }
+
+        /* 이미지 스타일 */
+        .event-image {
+            max-width: 150px; /* 이미지 최대 너비 */
+            height: auto; /* 이미지 비율 유지 */
+            border-radius: 5px; /* 이미지 모서리 둥글게 */
+        }
+
+        /* 페이지네이션 스타일 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .pagination button {
+            margin: 0 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px; /* 패딩 줄이기 */
+                font-size: 14px; /* 모바일에서 작은 폰트 크기 */
+            }
+
+            h1 {
+                font-size: 2em; /* 제목 크기 조정 */
+            }
+
+            input[type="text"],
+            input[type="date"],
+            button {
+                width: 100%; /* 전체 너비 사용 */
+                margin: 5px 0; /* 위아래 여백 추가 */
+            }
+
+            .event {
+                flex-direction: column; /* 이벤트 세로 정렬 */
+                align-items: center; /* 중앙 정렬 */
+            }
+
+            .event-image {
+                max-width: 100%; /* 이미지 반응형 크기 조정 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Seoul Cultural Events</h1>
+    <input type="text" id="searchInput" placeholder="Enter event information" />
+    <input type="date" id="startDate" placeholder="Start date" />
+    <input type="date" id="endDate" placeholder="End date" />
+    <button id="searchEvents">Search</button>
+    
+    <div id="eventList"></div> <!-- 이벤트 리스트가 표시될 곳 -->
+
+    <!-- 페이지네이션 버튼 추가 -->
+    <div class="pagination">
+        <button id="prevPage" onclick="changePage(-1)">이전</button>
+        <button id="nextPage" onclick="changePage(1)">다음</button>
+    </div>
+
+    <script>
+        let allEvents = []; // 모든 이벤트를 저장할 배열
+        let filteredEvents = []; // 필터링된 이벤트 배열
+        let currentPage = 1; // 현재 페이지
+        const eventsPerPage = 10; // 페이지당 표시할 이벤트 수
+
+        document.getElementById('searchEvents').addEventListener('click', searchEvents);
+
+        async function fetchCulturalEvents() {
+            const apiKey = '42494a5171696f6b37374b474c5a61'; // 인증키
+            const startIndex = 1; // 요청 시작 위치
+            const endIndex = 1000; // 요청 종료 위치
+
+            const url = `http://openapi.seoul.go.kr:8088/${apiKey}/xml/culturalEventInfo/${startIndex}/${endIndex}`; // HTTPS로 수정
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('네트워크 응답에 문제가 있습니다.');
+                }
+                const data = await response.text();
+                parseAndDisplayEvents(data);
+            } catch (error) {
+                console.error('API 호출 중 오류 발생:', error);
+                document.getElementById('eventList').innerHTML = `<p>데이터를 가져오는 중 오류가 발생했습니다: ${error.message}</p>`;
+            }
+        }
+
+        function parseAndDisplayEvents(xmlData) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlData, 'application/xml');
+            const events = xmlDoc.getElementsByTagName('row');
+
+            allEvents = []; // 배열 초기화
+
+            for (let i = 0; i < events.length; i++) {
+                const event = events[i];
+                const title = event.getElementsByTagName('TITLE')[0]?.textContent || '정보 없음';
+                const date = event.getElementsByTagName('DATE')[0]?.textContent || '정보 없음';
+                const place = event.getElementsByTagName('PLACE')[0]?.textContent || '정보 없음';
+                const MAIN_IMG = event.getElementsByTagName('MAIN_IMG')[0]?.textContent || '';
+                const CODENAME = event.getElementsByTagName('CODENAME')[0]?.textContent || '정보 없음';
+
+                allEvents.push({ title, date, place, MAIN_IMG, CODENAME });
+            }
+            filteredEvents = allEvents; // 필터링된 이벤트를 전체 이벤트로 초기화
+            displayEvents(); // 이벤트 표시
+        }
+
+        function displayEvents() {
+            const start = (currentPage - 1) * eventsPerPage;
+            const end = start + eventsPerPage;
+            const paginatedEvents = filteredEvents.slice(start, end);
+
+            const eventList = document.getElementById('eventList');
+            eventList.innerHTML = ''; // 기존 이벤트 리스트 초기화
+
+            paginatedEvents.forEach(event => {
+                const eventDiv = document.createElement('div');
+                eventDiv.classList.add('event');
+
+                eventDiv.innerHTML = `
+                    <img class="event-image" src="${event.MAIN_IMG}" alt="${event.title}" />
+                    <div>
+                        <h2>${event.title}</h2>
+                        <p><strong>날짜:</strong> ${event.date}</p>
+                        <p><strong>장소:</strong> ${event.place}</p>
+                        <p><strong>분류:</strong> ${event.CODENAME}</p>
+                    </div>
+                `;
+
+                eventList.appendChild(eventDiv); // 이벤트 추가
+            });
+
+            updatePagination(); // 페이지네이션 업데이트
+        }
+
+        function updatePagination() {
+            document.getElementById('prevPage').disabled = currentPage === 1; // 이전 버튼 활성화/비활성화
+            document.getElementById('nextPage').disabled = currentPage * eventsPerPage >= filteredEvents.length; // 다음 버튼 활성화/비활성화
+        }
+
+        function changePage(direction) {
+            currentPage += direction; // 페이지 변경
+            displayEvents(); // 이벤트 표시
+        }
+
+        function searchEvents() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase(); // 소문자로 변환
+            const startDateInput = document.getElementById('startDate').value; // 시작 날짜
+            const endDateInput = document.getElementById('endDate').value; // 종료 날짜
+
+            filteredEvents = allEvents.filter(event => {
+                const matchesSearch = event.title.toLowerCase().includes(searchInput); // 제목 검색
+                const matchesDate = (!startDateInput || event.date >= startDateInput) && (!endDateInput || event.date <= endDateInput); // 날짜 필터링
+                return matchesSearch && matchesDate; // 검색 결과 반환
+            });
+
+            currentPage = 1; // 페이지 초기화
+            displayEvents(); // 이벤트 표시
+        }
+
+        // 페이지 로드 시 데이터 가져오기
+        fetchCulturalEvents();
+    </script>
+</body>
+</html>
